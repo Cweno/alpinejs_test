@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- add the script -->
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <!-- add a css mask to work-hide the visual blip -->
+    <style>
+        [x-cloak] {
+            display: none;
+            background-color: ;
+        }
+    </style>
+    <title>AlpineJs Test :)</title>
+</head>
+<body>
+    <div>
+        <h1> AlpineJs - testing</h1>
+    </div>
+
+    <!-- x-data -->
+    <div
+        x-data="{open:false}"
+    >
+        <div
+            x-show="open"
+            x-cloak
+        >
+            <p class="">FALSE Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem nostrum, repudiandae porro facere, adipisci consectetur, fuga nulla rem atque ipsam iure commodi. Eveniet amet dolorum et labore explicabo culpa soluta.</p>
+        </div>
+    </div>
+    <hr>
+    <div
+        x-data="{open:true}"
+    >
+        <!-- x-show -->
+        <div
+            x-show="open"
+        >
+            <p class="">TRUE Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem nostrum, repudiandae porro facere, adipisci consectetur, fuga nulla rem atque ipsam iure commodi. Eveniet amet dolorum et labore explicabo culpa soluta.</p>
+        </div>
+    </div>
+    <hr>
+    <div
+        x-data="{open:false, 'info': '...information.....', function: 1+2}"
+    >
+        <!-- x-on -->
+        <button
+            x-on:click="open=!open"
+        >
+            press me (x-on:click)
+        </button>
+        <button
+            @click="open=!open"
+        >
+            press me (@click)
+        </button>
+        <!-- x-show + x-transition -->
+        <div
+            x-show="open" 
+            x-transition.duration.1500ms
+        >
+            some random text
+        </div>
+
+        <!-- x-text -->
+        <div   
+            class=""
+            x-show="open"
+            x-transition.duration.5000ms
+        >
+        more random text displaying some
+            <span 
+                x-text="info"
+                class=""
+            >
+            </span>        
+        </div>
+
+        <hr>
+        <!-- x-effect acts like a watcher (this needs the console opened)--> 
+        <div 
+            x-data="{ label: 'Hello' }" 
+            x-effect="console.log(label)"
+        >
+            <button 
+                @click="label += ' World!'"
+            >
+                Change Message
+            </button>
+        </div>
+        
+    </div>
+
+    <hr>
+    <!-- v-bind -->
+    <div 
+        x-data="{active:false}"
+    >
+        <button 
+            @click="active=!active"
+            :style="active ? 'background-color: crimson' : 'background-color: darksalmon'"
+        >
+            v-bind:style
+        </button>
+    </div>
+
+    <div 
+        x-data="{active:false}"
+    >
+        <button 
+            @click="active=!active"
+            :style="active ? 'background-color: aquamarine' : 'background-color: green'"
+        >
+            :style
+        </button>
+    </div>
+
+    <hr>
+    
+    <!-- x-model -->
+    <div 
+        x-data="{value: ''}"
+        class=""
+    >
+        <input 
+            type="text"
+            x-model="value"
+            placeholder="type sometihing in here" 
+        >
+        <p>
+            <span>
+                value added:
+            </span>
+            <span
+                x-text="value"
+            ></span>
+        </p>
+    </div>
+
+    <hr>
+
+    <!-- x-for -->
+    <ul x-data="{ colors: ['Red', 'Orange', 'Yellow'] }">
+        <template x-for="color in colors">
+            <li x-text="color"></li>
+        </template>
+    </ul>
+
+    <hr>
+    <!-- x-if + x-for-->
+    <div x-data="{active:false, fruits: ['apples', 'bananas', 'oranges', 'grapes'] }">
+        <button 
+            @click="active=!active"
+            :style="active ? 'background-color: aquamarine' : 'background-color: green'"
+        >
+            click
+        </button>
+
+        <span x-text="active"></span>
+
+        <template
+            x-if="active"
+        >
+            <div>
+                <span>peek a fruit!!</span>
+                <ul>
+                    <template v-if="active" x-for="fruit in fruits">
+                        <div>
+                            <li x-text="fruit"></li>
+                        </div>
+                    </template>
+                </ul>
+            </div>
+        </template>
+    </div>
+
+    <hr>
+
+    <!-- x-for + x-model + x-if + x-on + x-text -->
+    <div 
+        class=""
+        x-data="{ fruits:[], value: '', }"
+    >
+        <template x-if="fruits.length>0">
+            <div>
+                Fruits:
+                <ul>
+                    <template x-for="fruit in fruits">
+                        <div>
+                            <li x-text="fruit">
+                            </li>
+                            <button
+                                x-on:click="fruits.splice(fruits.indexOf(fruit), 1)"
+                            >
+                                delete
+                            </button>
+                        </div>
+                    </template>
+                </ul>
+            </div>
+        </template>
+        add a fruit
+        <input 
+            type="text"
+            x-model="value"    
+        >
+        <button 
+            class=""
+            @click="if (value.length>0){fruits.push(value); value=''}"
+        >
+            ADD
+        </button>
+    </div>
+
+    <hr>
+    <!-- $refs + $refs  -->
+    <div class="" x-data="{ fruits:[], value: '', }">
+        <span x-ref="text">Hello 👋</span>
+        <button @click="$refs.text.remove()">Remove Text</button>
+    </div>
+</body>
+</html>
